@@ -1,0 +1,59 @@
+@import url('color-palette.css');
+
+.comment-separator {
+    position: relative;
+    margin: 1.2vh 1.2em;
+    height: 1px;
+    background-color: var(--comment-color);
+    color: var(--comment-color);
+    font-family: "JetBrains Mono", "Consolas", "Courier New", monospace;
+    font-size: 1.05rem;
+    font-style: normal;
+    letter-spacing: 4px;
+    opacity: 0.5;
+    user-select: none;
+}
+.comment-separator::before {
+    content: "#";
+    position: absolute;
+    right: calc(100% + 4px);
+    top: 50%;
+    transform: translateY(-50%);
+    line-height: 1;
+}
+.comment-separator::after {
+    content: "#";
+    position: absolute;
+    left: calc(100% + 4px);
+    top: 50%;
+    transform: translateY(-50%);
+    line-height: 1;
+}
+.comment-separator:has(span) {
+    height: auto;
+    background: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 50px 1.2em;
+}
+.comment-separator:has(span)::before,
+.comment-separator:has(span)::after {
+    position: static;
+    transform: none;
+}
+.comment-separator:has(span) span {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    gap: 8px;
+}
+.comment-separator:has(span) span::before,
+.comment-separator:has(span) span::after {
+    content: "";
+    flex: 1;
+    height: 1.5px;
+    background-color: var(--comment-color);
+}
+.comment-separator:has(span) em::before { content: "# "; font-style: normal; }
+.comment-separator:has(span) em::after  { content: " #"; font-style: normal; }

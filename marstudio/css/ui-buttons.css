@@ -1,0 +1,50 @@
+@import url('color-palette.css');
+
+.ui-button {
+    background-color: var(--ui-bg);
+    color: var(--comment-color);
+    display: inline-block;
+    justify-content: center;
+    padding: 8px 16px;
+    width: 6%;
+    height: 5%;
+    border: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border-radius: 4px;
+    
+}
+
+.themes-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+.theme-btn {
+    background-color: var(--ui-bg);
+    color: var(--text);
+    border: 2px solid var(--comment-color);
+    padding: 16px 32px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 180px;
+    text-align: center;
+}
+.theme-btn:hover {
+    background-color: var(--ui-accent);
+    color: white;
+    border-color: var(--comment-color);
+    transform: scale(1.05);
+}
+.text-wrapper {
+    background-color: var(--ui-bg);
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 auto;
+}

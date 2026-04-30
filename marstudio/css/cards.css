@@ -1,0 +1,155 @@
+@import url('color-palette.css');
+
+.carousel-container {
+    position: relative;
+    max-width: 1200px;
+    margin: 50px auto;
+    overflow: hidden;
+    padding: 40px 0;
+}
+
+.carousel-track {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.5s ease;
+}
+.carousel-status {
+    text-align: center;
+    font-size: 12px;
+    color: var(--warning_color);
+    margin-top: 10px;
+}
+.carousel-container.auto-rotating::after {
+    content: '● AUTO';
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 10px;
+    color: var(--base_color);
+    opacity: 0.5;
+}
+
+.card {
+    flex: 20% 20% 250px;  /* Fixed width */
+    background: var(--ui_bg);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+    opacity: 0.4;  /* Dimmed by default */
+    filter: grayscale(0.5);
+    transform: scale(0.85);
+    cursor: pointer;
+}
+
+.card.active {
+    opacity: 1;
+    filter: grayscale(0);
+    transform: scale(1);
+    /*box-shadow: 0 0 20px rgba(66, 255, 194, 0.3);*/
+    border: 2px solid var(--base_color);
+}
+
+/* Hover effect on non-active cards */
+.card:not(.active):hover {
+    opacity: 0.7;
+    transform: scale(0.9);
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.card h3 {
+    color: var(--comment-color);
+    margin: 10px 0;
+}
+
+.card p {
+    color: var(--var_color);
+    font-size: 0.9em;
+    margin: 10px 0;
+}
+
+.card a {
+    display: inline-block;
+    margin-top: 10px;
+    color: var(--base_color);
+    text-decoration: none;
+}
+
+.card a:hover {
+    color: var(--function_color);
+}
+
+/* Navigation Buttons */
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--ui_accent);
+    color: var(--comment-color);
+    border: none;
+    font-size: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+    background: var(--base_color);
+    color: var(--bg);
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+
+/* Dot indicators */
+.dots {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--ui_accent);
+    margin: 0 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dot.active {
+    background: var(--base_color);
+    width: 20px;
+    border-radius: 5px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .card {
+        flex: 0 0 200px;
+    }
+    
+    .nav-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 20px;
+    }
+}

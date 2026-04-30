@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>MARS•STUDIO</title>
+        <link rel="icon" type="image/x-icon" href="mstudiologo.png">
+        <link rel="stylesheet" href="style.css">
+
+        <meta charset="UTF-8">
+        <meta name="keywords" content="MARS,STUDIO,GAME,DESIGN,DEVELOPMENT,CODING,PIXEL,ART,GODOT,ANIMATION">
+        <meta name="author" content="EcceMars">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <meta http-equiv="refresh" content="30">
+    </head>
+    <body>
+        <header>
+            <h1>MARS⋅STUDIO</h1>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="#">adopt_an_artist</a></li>
+                <li><a href="#about_me">about_me</a></li>
+                <li><a href="#" onclick="getDiscord(); return false;">discord</a></li>
+                <li><a href="https://github.com/EcceMars" target="_blank">github</a></li>
+                <li><a href="#">send_message</a></li>
+            </ul>
+        </nav>
+
+        <div class="comment-separator"></div>
+
+        <h2>PROJECTS</h2>
+
+        <div class="carousel-container">
+            <button class="nav-btn prev" onclick="prevCard()">‹</button>
+            <div class="carousel-track" id="carouselTrack">
+                <div class="card" data-index="0">
+                    <img src="locust.png" alt="Locust Project">
+                    <h3>LOCUST</h3>
+                    <p>2D mecha pixel art platformer</p>
+                    <a href="#" style="color: var(--function_color);">View project →</a>
+                </div>
+                <div class="card" data-index="1">
+                    <img src="distant_sellsword.png" alt="Distant: Sellsword Project">
+                    <h3>Distant: Sellsword</h3>
+                    <p>ECS RPG simulator</p>
+                    <a href="#" style="color: var(--function_color);">View project →</a>
+                </div>
+            </div>
+            <div class="carousel-track" id="carouselTrack">
+
+
+            </div>
+            <button class="nav-btn next" onclick="nextCard()">›</button>
+        </div>
+
+        <div class="dots" id="dots"></div>
+
+        <div id="about_me">
+            <div class="comment-separator"></div>
+            <div>
+                <img src="mars_anim.gif" class="round-gif">
+                <div class="text-box" style="color: var(--comment-color);">
+                    Animator and pixel artist, turned game developer.<br><br>Adopt an artist!
+                </div>
+            </div>
+        </div>
+        <script src="carousel.js"></script>
+    </body>
+</html>
+
+<script>
+function getDiscord() {
+    navigator.clipboard.writeText("eccemars");
+    alert("Hey! You got my Discord username (eccemars)! Send me friend request there. 💖");
+}
+</script>

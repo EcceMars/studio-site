@@ -1,0 +1,22 @@
+:root{
+    --symbol-color: #abc9ff;
+    --keyword-color: #ff7085;
+    --control-flow-color: #ff8ccc;
+    --annotation-color: #eaa46a;
+    --base-color: #42ffc2;
+    --engine-color: #8fffdb;
+    --user-color: #a7ead5;
+    --var-color: #aacbe7;
+    --comment-color: #FFFFFF;
+    --number-color: #a1ffe0;
+    --string-color: #ffc2a6;
+    --function-color: #57b3ff;
+    --mem-var-color: #bce0ff;
+
+    --critical-color: #c45959;
+    --warning-color: #b89c7a;
+
+    --bg: #1a1a1a;
+    --ui-bg: #424242;
+    --ui-accent: #6e6e6e;
+}
