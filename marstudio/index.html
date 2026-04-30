@@ -1,77 +1,127 @@
 <!DOCTYPE html>
-
 <html lang="en">
     <head>
         <title>MARS•STUDIO</title>
-        <link rel="icon" type="image/x-icon" href="mstudiologo.png">
-        <link rel="stylesheet" href="style.css">
-
+ 
+        <!-- Favicon -->
+        <link rel="icon" type="image/x-icon" href="imgs/mstudiologo.png">
+ 
+        <!-- Main stylesheet — imports all component CSS via objects.css -->
+        <link rel="stylesheet" href="css/style.css?v=2">
+        <script src="js/carousel.js?v=2"></script>
+ 
+        <!-- Page metadata -->
         <meta charset="UTF-8">
+        <meta name="description" content="MARS•STUDIO — pixel art, animation and game development by EcceMars.">
         <meta name="keywords" content="MARS,STUDIO,GAME,DESIGN,DEVELOPMENT,CODING,PIXEL,ART,GODOT,ANIMATION">
         <meta name="author" content="EcceMars">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-        <meta http-equiv="refresh" content="30">
+ 
+        <!-- Ensures correct scaling on mobile devices -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
+ 
     <body>
+        <div class="cave-bg"></div>
+        <!-- ═══════════════════════════════════════
+             HEADER — site title
+        ═══════════════════════════════════════ -->
         <header>
             <h1>MARS⋅STUDIO</h1>
         </header>
-
+        <div class="construction-overlay" id="constructionOverlay"></div>
+        <div class="construction-banner" id="constructionBanner">
+            🚧 This site is still under construction — most links may not work yet.
+            <button onclick="dismissBanner()">✕</button>
+        </div>
+ 
+        <!-- ═══════════════════════════════════════
+             NAV — main navigation links
+             Unfinished links use # as placeholder
+        ═══════════════════════════════════════ -->
         <nav>
             <ul>
-                <li><a href="#">adopt_an_artist</a></li>
-                <li><a href="#about_me">about_me</a></li>
-                <li><a href="#" onclick="getDiscord(); return false;">discord</a></li>
-                <li><a href="https://github.com/EcceMars" target="_blank">github</a></li>
-                <li><a href="#">send_message</a></li>
+                <li><a href="#">Adopt an Artist!</a></li>
+                <li><a href="#about_me">About me</a></li>
+                <li><a href="#" onclick="copyDiscord(); return false;">Discord</a></li>
+                <li><a href="https://github.com/EcceMars" target="_blank">GitHub</a></li>
+                <li><a href="#">Send me a Message</a></li>
             </ul>
         </nav>
-
+ 
+        <!-- Visual divider between nav and content -->
         <div class="comment-separator"></div>
-
+ 
+        <!-- ═══════════════════════════════════════
+             PROJECTS — card carousel
+        ═══════════════════════════════════════ -->
         <h2>PROJECTS</h2>
-
+ 
         <div class="carousel-container">
             <button class="nav-btn prev" onclick="prevCard()">‹</button>
+ 
             <div class="carousel-track" id="carouselTrack">
+ 
                 <div class="card" data-index="0">
-                    <img src="locust.png" alt="Locust Project">
+                    <img src="imgs/locust.png" alt="Locust Project">
                     <h3>LOCUST</h3>
                     <p>2D mecha pixel art platformer</p>
-                    <a href="#" style="color: var(--function_color);">View project →</a>
+                    <a href="locust_project.html">View project →</a>
                 </div>
+ 
                 <div class="card" data-index="1">
-                    <img src="distant_sellsword.png" alt="Distant: Sellsword Project">
+                    <img src="imgs/distant_sellsword.png" alt="Distant: Sellsword Project">
                     <h3>Distant: Sellsword</h3>
                     <p>ECS RPG simulator</p>
-                    <a href="#" style="color: var(--function_color);">View project →</a>
+                    <a href="#">View project →</a>
                 </div>
-            </div>
-            <div class="carousel-track" id="carouselTrack">
 
-
+                <div class="card" data-index="2">
+                    <img src="imgs/pilot.png" alt="Portfolio">
+                    <h3>Art Pieces</h3>
+                    <p>Illustrations and animations</p>
+                    <a href="#">View others →</a>
+ 
             </div>
+ 
             <button class="nav-btn next" onclick="nextCard()">›</button>
         </div>
-
+ 
+        <!-- Carousel dot indicators — populated dynamically by carousel.js -->
         <div class="dots" id="dots"></div>
-
-        <div id="about_me">
-            <div class="comment-separator"></div>
-            <div>
-                <img src="mars_anim.gif" class="round-gif">
-                <div class="text-box" style="color: var(--comment-color);">
-                    Animator and pixel artist, turned game developer.<br><br>Adopt an artist!
+ 
+        <!-- ═══════════════════════════════════════
+             ABOUT — short bio section
+        ═══════════════════════════════════════ -->
+        <div class="comment-separator"></div>
+        <section id="about_me">
+            <div class="about-layout">
+                <img src="imgs/mars_anim.gif" class="round-gif" alt="Mars animated avatar">
+                <div class="about-text">
+                    <a href="https://x.com/EcceMars" target="_blank" class="social-handle">@EcceMars</a>
+                    <div class="text-box">
+                        Animator and pixel artist, turned game developer.<br><br>Adopt an artist!
+                    </div>
                 </div>
             </div>
-        </div>
-        <script src="carousel.js"></script>
+        </section>
+ 
+        <!-- ═══════════════════════════════════════
+             SCRIPTS
+             Placed at end of body so the DOM is
+             fully loaded before JS runs.
+        ═══════════════════════════════════════ -->
+        <script src="js/carousel.js"></script>
+        <script>
+            /* Copies Discord username to clipboard and notifies the user. */
+            function copyDiscord() {
+                navigator.clipboard.writeText("eccemars");
+                alert("Hey! You got my Discord username (eccemars)! Send me a friend request there. 💖");
+            }
+            function dismissBanner() {
+                document.getElementById('constructionBanner').style.display = 'none';
+                document.getElementById('constructionOverlay').style.display = 'none';
+            }
+        </script>
+ 
     </body>
 </html>
-
-<script>
-function getDiscord() {
-    navigator.clipboard.writeText("eccemars");
-    alert("Hey! You got my Discord username (eccemars)! Send me friend request there. 💖");
-}
-</script>

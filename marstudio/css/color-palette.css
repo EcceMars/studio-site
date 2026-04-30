@@ -1,22 +1,38 @@
-:root{
-    --symbol-color: #abc9ff;
-    --keyword-color: #ff7085;
-    --control-flow-color: #ff8ccc;
-    --annotation-color: #eaa46a;
-    --base-color: #42ffc2;
-    --engine-color: #8fffdb;
-    --user-color: #a7ead5;
-    --var-color: #aacbe7;
-    --comment-color: #FFFFFF;
-    --number-color: #a1ffe0;
-    --string-color: #ffc2a6;
-    --function-color: #57b3ff;
-    --mem-var-color: #bce0ff;
+/* ═══════════════════════════════════════════════════════════
+   color-palette.css — global CSS custom properties
 
-    --critical-color: #c45959;
-    --warning-color: #b89c7a;
+   Colours are based on Godot Engine's editor theme.
+   :root makes these variables available everywhere on the page.
 
-    --bg: #1a1a1a;
-    --ui-bg: #424242;
-    --ui-accent: #6e6e6e;
+   Usage: var(--variable-name)
+   e.g.   color: var(--keyword-color);
+═══════════════════════════════════════════════════════════ */
+
+:root {
+    /* ── Syntax / language colours (from Godot's script editor) ── */
+    --symbol-color:       #abc9ff; /* Operators, punctuation         */
+    --keyword-color:      #ff7085; /* Keywords (if, for, return...)  */
+    --control-flow-color: #ff8ccc; /* break, continue, match...      */
+    --annotation-color:   #eaa46a; /* @export, @onready...           */
+    --base-color:         #42ffc2; /* Built-in types                 */
+    --engine-color:       #8fffdb; /* Engine singletons (Input, OS…) */
+    --user-color:         #a7ead5; /* User-defined identifiers       */
+    --var-color:          #aacbe7; /* Variables                      */
+    --comment-color:      #FFFFFF; /* Comments / general white text  */
+    --number-color:       #a1ffe0; /* Numeric literals               */
+    --string-color:       #ffc2a6; /* String literals                */
+    --function-color:     #57b3ff; /* Function names                 */
+    --mem-var-color:      #bce0ff; /* Member variables               */
+
+    /* ── Status colours ──────────────────────────────────── */
+    --critical-color: #c45959; /* Errors, critical warnings */
+    --warning-color:  #b89c7a; /* Non-critical warnings     */
+    --export-color: #ffc595;
+
+    /* ── UI surface colours ──────────────────────────────── */
+    --bg:         #1a1a1a; /* Page background        */
+    --cave-bottom-color: #242031;
+    --cave-top-color: #302d2b;
+    --ui-bg:      #424242; /* Cards, panels          */
+    --ui-accent:  #6e6e6e; /* Buttons, subtle accents */
 }

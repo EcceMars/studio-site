@@ -1,98 +1,181 @@
-let currentIndex = 0;
-let autoRotateInterval;
-let inactivityTimer;
-const AUTO_ROTATE_DELAY = 5000; // 5 seconds
-const INACTIVITY_RESUME_DELAY = 10000; // 10 seconds after last interaction
+/* ═══════════════════════════════════════════════════════════
+   carousel.js — infinite looping project card carousel
 
-const cards = document.querySelectorAll('.card');
-const track = document.getElementById('carouselTrack');
-const totalCards = cards.length;
+   Track layout after cloning:
+   [ clone of last card | card 0 | card 1 | ... | card n | clone of first card ]
 
-// Function to update which card is active
-function updateCarousel() {
-    // Remove active class from all cards
-    cards.forEach(card => {
-        card.classList.remove('active');
-    });
-    
-    // Add active class to current card
-    cards[currentIndex].classList.add('active');
-    
-    // Update dots
-    updateDots();
-    
-    // Optional: Scroll track to show active card
-    if (track) {
-        const activeCard = cards[currentIndex];
-        const container = document.querySelector('.carousel-container');
-        if (container && activeCard) {
-            const cardWidth = activeCard.offsetWidth + 30;
-            const trackPosition = currentIndex * cardWidth - (container.offsetWidth / 2) + (activeCard.offsetWidth / 2);
-            track.style.transform = `translateX(-${Math.max(0, trackPosition)}px)`;
-        }
+   The carousel starts on card 0 (index 1 in the track,
+   because the clone of the last card sits at index 0).
+
+   When the user reaches the clone at either end, the track
+   silently snaps to the real equivalent card once the CSS
+   transition finishes — creating the illusion of looping.
+═══════════════════════════════════════════════════════════ */
+
+/* ── Configuration ───────────────────────────────────────── */
+const AUTO_ROTATE_DELAY = 5000; // ms between automatic card advances
+
+/* ── State ───────────────────────────────────────────────── */
+let currentIndex       = 1;     // starts at 1 because index 0 is the clone of last card
+let isTransitioning    = false; // prevents input during a snap
+let autoRotateInterval = null;
+
+/* ── DOM references ──────────────────────────────────────── */
+const track         = document.getElementById('carouselTrack');
+const originalCards = Array.from(document.querySelectorAll('.card'));
+const totalOriginal = originalCards.length;
+
+/* ═══════════════════════════════════════════════════════════
+   SETUP — clone first and last cards, inject into track
+═══════════════════════════════════════════════════════════ */
+function setupInfiniteTrack() {
+    // cloneNode(true) copies the element and all its children
+    const firstClone = originalCards[0].cloneNode(true);
+    const lastClone  = originalCards[totalOriginal - 1].cloneNode(true);
+
+    // Mark clones so we can identify them if needed
+    firstClone.dataset.clone = 'true';
+    lastClone.dataset.clone  = 'true';
+
+    // lastClone goes before card 0, firstClone goes after card n
+    track.insertBefore(lastClone, originalCards[0]);
+    track.appendChild(firstClone);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LAYOUT — measure card width + gap for transform calculation
+═══════════════════════════════════════════════════════════ */
+function getCardStep() {
+    const allCards = track.querySelectorAll('.card');
+    const card     = allCards[currentIndex];
+    const trackGap = parseInt(getComputedStyle(track).gap) || 30;
+
+    return card.offsetWidth + trackGap;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RENDER — move the track to show the current card centred
+═══════════════════════════════════════════════════════════ */
+function updateTrackPosition(animate) {
+    const container = document.querySelector('.carousel-container');
+    const allCards  = track.querySelectorAll('.card');
+    const card      = allCards[currentIndex];
+    const step      = getCardStep();
+
+    // Calculate how far to shift the track so this card is centred
+    const offset = currentIndex * step
+                 - (container.offsetWidth / 2)
+                 + (card.offsetWidth / 2);
+
+    // Disable transition for instant snaps (infinite loop reset)
+    track.style.transition = animate ? 'transform 0.5s ease' : 'none';
+    track.style.transform  = `translateX(-${Math.max(0, offset)}px)`;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ACTIVE STATE — highlight only the current card
+═══════════════════════════════════════════════════════════ */
+function updateActiveCard() {
+    const allCards = track.querySelectorAll('.card');
+
+    allCards.forEach(card => card.classList.remove('active'));
+    allCards[currentIndex].classList.add('active');
+
+    // Dots reflect position in the original cards array.
+    // currentIndex - 1 accounts for the leading clone.
+    updateDots((currentIndex - 1 + totalOriginal) % totalOriginal);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   INFINITE LOOP — silent snap after reaching a clone.
+   Called when the CSS transition ends.
+═══════════════════════════════════════════════════════════ */
+function onTransitionEnd() {
+    const totalCards = track.querySelectorAll('.card').length; // includes clones
+
+    // Landed on clone of first card (far right) — snap to real first card
+    if (currentIndex >= totalCards - 1) {
+        currentIndex = 1;
+        updateTrackPosition(false);
+        updateActiveCard();
     }
+
+    // Landed on clone of last card (far left) — snap to real last card
+    if (currentIndex <= 0) {
+        currentIndex = totalCards - 2;
+        updateTrackPosition(false);
+        updateActiveCard();
+    }
+
+    isTransitioning = false;
 }
 
-// Next card (with wraparound)
+/* ═══════════════════════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════════════════════ */
 function nextCard() {
-    currentIndex = (currentIndex + 1) % totalCards;
-    updateCarousel();
-    resetAutoRotate(); // Reset timer on manual navigation
+    if (isTransitioning) return;
+    isTransitioning = true;
+    currentIndex++;
+    updateTrackPosition(true);
+    updateActiveCard();
+    resetAutoRotate();
 }
 
-// Previous card (with wraparound)
 function prevCard() {
-    currentIndex = (currentIndex - 1 + totalCards) % totalCards;
-    updateCarousel();
-    resetAutoRotate(); // Reset timer on manual navigation
+    if (isTransitioning) return;
+    isTransitioning = true;
+    currentIndex--;
+    updateTrackPosition(true);
+    updateActiveCard();
+    resetAutoRotate();
 }
 
-// Focus on a specific card by index
-function focusOnCard(index) {
-    if (index === currentIndex) return; // Already focused
-    
-    currentIndex = index;
-    updateCarousel();
-    resetAutoRotate(); // Stop auto-rotate temporarily
+/* Jump to a real card by its original index (used by dots).
+   +1 accounts for the leading clone offset. */
+function focusOnCard(originalIndex) {
+    if (isTransitioning) return;
+    const target = originalIndex + 1;
+    if (target === currentIndex) return;
+
+    isTransitioning = true;
+    currentIndex    = target;
+    updateTrackPosition(true);
+    updateActiveCard();
+    resetAutoRotate();
 }
 
-// Create dot indicators
+/* ═══════════════════════════════════════════════════════════
+   DOT INDICATORS
+═══════════════════════════════════════════════════════════ */
 function createDots() {
     const dotsContainer = document.getElementById('dots');
     if (!dotsContainer) return;
-    
+
     dotsContainer.innerHTML = '';
-    
-    cards.forEach((_, index) => {
+
+    originalCards.forEach((_, index) => {
         const dot = document.createElement('div');
         dot.classList.add('dot');
-        dot.addEventListener('click', () => {
-            focusOnCard(index);
-        });
+        dot.addEventListener('click', () => focusOnCard(index));
         dotsContainer.appendChild(dot);
     });
 }
 
-function updateDots() {
-    const dots = document.querySelectorAll('.dot');
-    dots.forEach((dot, index) => {
-        if (index === currentIndex) {
-            dot.classList.add('active');
-        } else {
-            dot.classList.remove('active');
-        }
+function updateDots(originalIndex) {
+    document.querySelectorAll('.dot').forEach((dot, index) => {
+        dot.classList.toggle('active', index === originalIndex);
     });
 }
 
-// Start auto-rotation
+/* ═══════════════════════════════════════════════════════════
+   AUTO-ROTATION
+═══════════════════════════════════════════════════════════ */
 function startAutoRotate() {
-    if (autoRotateInterval) clearInterval(autoRotateInterval);
-    autoRotateInterval = setInterval(() => {
-        nextCard();
-    }, AUTO_ROTATE_DELAY);
+    stopAutoRotate();
+    autoRotateInterval = setInterval(nextCard, AUTO_ROTATE_DELAY);
 }
 
-// Stop auto-rotation
 function stopAutoRotate() {
     if (autoRotateInterval) {
         clearInterval(autoRotateInterval);
@@ -100,71 +183,70 @@ function stopAutoRotate() {
     }
 }
 
-// Reset auto-rotate (stop and restart)
 function resetAutoRotate() {
     stopAutoRotate();
     startAutoRotate();
-    
-    // Reset inactivity timer
-    if (inactivityTimer) clearTimeout(inactivityTimer);
-    inactivityTimer = setTimeout(() => {
-        // Auto-rotate is already running, this just ensures it continues
-        console.log('Resuming auto-rotation');
-    }, INACTIVITY_RESUME_DELAY);
 }
 
-// Setup card click behavior (without opening tabs)
+/* ═══════════════════════════════════════════════════════════
+   INTERACTIONS
+═══════════════════════════════════════════════════════════ */
 function setupCardInteractions() {
-    cards.forEach((card, index) => {
-        // Get the "View project" link inside this card
-        const projectLink = card.querySelector('a');
-        
-        // Handle clicks on the entire card except the link
-        card.addEventListener('click', (e) => {
-            // If the click target IS the link, do nothing (let link handle it)
-            if (e.target.tagName === 'A' || e.target.closest('a')) {
-                return; // Let the link do its job
-            }
-            
-            // Otherwise, focus on this card
-            e.preventDefault();
-            focusOnCard(index);
-        });
-        
-        // Ensure the link opens in new tab normally (no extra JS needed)
-        if (projectLink && !projectLink.hasAttribute('target')) {
-            projectLink.setAttribute('target', '_blank');
-        }
+    // Event delegation on the track covers clones automatically
+    track.addEventListener('click', (e) => {
+        const card = e.target.closest('.card');
+        if (!card) return;
+
+        // Let project links open normally
+        if (e.target.tagName === 'A' || e.target.closest('a')) return;
+
+        // Find this card's position in the track (includes clones)
+        const allCards   = Array.from(track.querySelectorAll('.card'));
+        const trackIndex = allCards.indexOf(card);
+        if (trackIndex === currentIndex) return;
+
+        isTransitioning = true;
+        currentIndex    = trackIndex;
+        updateTrackPosition(true);
+        updateActiveCard();
+        resetAutoRotate();
+    });
+
+    // Ensure all links (including those in clones) open in a new tab
+    track.querySelectorAll('a').forEach(link => {
+        if (!link.hasAttribute('target')) link.setAttribute('target', '_blank');
     });
 }
 
-// Optional: Pause auto-rotate on hover
 function setupHoverPause() {
     const container = document.querySelector('.carousel-container');
     if (!container) return;
-    
-    container.addEventListener('mouseenter', () => {
-        stopAutoRotate();
-    });
-    
-    container.addEventListener('mouseleave', () => {
-        startAutoRotate();
-    });
+
+    container.addEventListener('mouseenter', stopAutoRotate);
+    container.addEventListener('mouseleave', startAutoRotate);
 }
 
-// Initialize everything
+/* ═══════════════════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════════════════ */
 function initCarousel() {
-    if (cards.length === 0) {
-        console.error('No cards found!');
+    if (originalCards.length === 0) {
+        console.error('carousel.js: No .card elements found in the DOM.');
         return;
     }
-    
+
+    setupInfiniteTrack();
     createDots();
     setupCardInteractions();
     setupHoverPause();
-    updateCarousel();
+
+    // transitionend fires when the CSS slide animation finishes —
+    // this is when we perform the silent snap for infinite looping
+    track.addEventListener('transitionend', onTransitionEnd);
+
+    updateTrackPosition(false);
+    updateActiveCard();
     startAutoRotate();
 }
 
-// Start the carousel when page loads
 document.addEventListener('DOMContentLoaded', initCarousel);

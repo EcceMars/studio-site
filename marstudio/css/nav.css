@@ -1,26 +1,44 @@
+/* ═══════════════════════════════════════════════════════════
+   nav.css — top navigation bar styles
+═══════════════════════════════════════════════════════════ */
+
 @import url('color-palette.css');
+
 nav {
     width: 100%;
     display: flex;
     justify-content: center;
     opacity: 0.8;
 }
-nav ul li {
-    display: inline;
+
+/* Inline list — removes bullets and lays items out
+   horizontally. flex-wrap allows wrapping on small screens. */
+nav ul {
+    display: flex;
     flex-wrap: wrap;
     justify-content: center;
     list-style: none;
+    padding: 0;
 }
+
+nav ul li {
+    display: inline;
+}
+
 nav ul li a {
     text-decoration: none;
     color: var(--function-color);
     font-weight: 400;
     padding: 8px 12px;
-    transition: all 0.3s ease;
+    transition: opacity 0.3s ease;
 }
+
 nav ul li a:hover {
     opacity: 0.7;
 }
+
+/* Pipe separator between nav items.
+   :not(:last-child) skips the separator after the final item. */
 nav ul li:not(:last-child)::after {
     content: "|";
     color: var(--keyword-color);

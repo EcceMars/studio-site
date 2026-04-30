@@ -1,20 +1,33 @@
+/* ═══════════════════════════════════════════════════════════
+   ui-buttons.css — reusable button and theme-picker styles
+═══════════════════════════════════════════════════════════ */
+
 @import url('color-palette.css');
 
+/* ── Generic utility button ──────────────────────────────── */
+
+/* .ui-button is a small inline button for minor actions.
+   Sizing uses fixed px rather than % to stay predictable
+   regardless of parent width. */
 .ui-button {
+    display: inline-block;
+    padding: 8px 16px;
     background-color: var(--ui-bg);
     color: var(--comment-color);
-    display: inline-block;
-    justify-content: center;
-    padding: 8px 16px;
-    width: 6%;
-    height: 5%;
     border: none;
-    transition: all 0.3s ease;
-    cursor: pointer;
     border-radius: 4px;
-    
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
+.ui-button:hover {
+    background-color: var(--ui-accent);
+}
+
+/* ── Theme picker container ──────────────────────────────── */
+
+/* Wraps a row of .theme-btn elements; centres and wraps
+   them on narrow screens. */
 .themes-container {
     display: flex;
     flex-wrap: wrap;
@@ -23,28 +36,33 @@
     max-width: 900px;
     margin: 0 auto;
 }
+
+/* ── Theme button ────────────────────────────────────────── */
 .theme-btn {
+    min-width: 180px;
+    padding: 16px 32px;
     background-color: var(--ui-bg);
     color: var(--text);
     border: 2px solid var(--comment-color);
-    padding: 16px 32px;
+    border-radius: 6px;
     font-size: 1.1rem;
     font-weight: 600;
-    border-radius: 6px;
+    text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
-    min-width: 180px;
-    text-align: center;
 }
+
 .theme-btn:hover {
     background-color: var(--ui-accent);
     color: white;
-    border-color: var(--comment-color);
     transform: scale(1.05);
 }
+
+/* ── Text wrapper ────────────────────────────────────────── */
+
+/* Constrains a block of prose to a readable line length */
 .text-wrapper {
-    background-color: var(--ui-bg);
     max-width: 800px;
     margin: 0 auto;
-    padding: 0 auto;
+    background-color: var(--ui-bg);
 }
