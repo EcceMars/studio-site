@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>MARS•STUDIO — Locust Project Development</title>
+
+        <!-- Favicon -->
+        <link rel="icon" type="image/x-icon" href="imgs/mstudiologo.png">
+
+        <link rel="stylesheet" href="css/style.css?v=2">
+
+        <!-- Page metadata -->
+        <meta charset="UTF-8">
+        <meta name="description" content="MARS•STUDIO — Locust: 2D mecha pixel art platformer by EcceMars.">
+        <meta name="keywords" content="MARS,STUDIO,LOCUST,GAME,PIXEL,ART,GODOT,MECHA,PLATFORMER">
+        <meta name="author" content="EcceMars">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div class="cave-bg"></div>
+        <header class="site-header">
+            <nav style="justify-content: left;"><ul style="justify-content: left;"><li><a href="index.html" class="site-header__home-link">‹ MARS⋅STUDIO</a></li></ul></nav>
+        </header>
+
+        <main class="project-content">
+
+            <h1 id="project-title">Development -> Animation</h1>
+            <h2>Procedural Animation</h2>
+
+            <div class="project-media-box project-media-box--video">
+                <iframe
+                    id="locust-player"
+                    src="https://www.youtube-nocookie.com/embed/jmib39GPo54?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&disablekb=1&enablejsapi=1&vq=hd1080"
+                    frameBorder="0"
+                    title="Locust gameplay preview"
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <section id="section-overview" class="project-section">
+                <div class="project-media-box">
+                    <img src="imgs/procedural.png" alt="Procedural anim">
+                </div>
+
+                <div class="project-text-box">
+                    <span class="project-text-box__label">Animating with Composition</span>
+                    <div class="text-box">
+                        <p>
+                            As the mech units are too big—mainly their sprites,
+                            it is a bit hard to draw each frame on a walk animation.
+                            But the main reason to work with this type of composed animation
+                            is its procedural capabilities.
+                            <br>
+                            <br>
+                            There was a good, simple tutorial on Youtube about
+                            walking around and having the character's gun point towards
+                            the mouse position. The idea is similar.
+                            <br>
+                            <br>
+                            Instead of wondering when the player is about to shoot, or
+                            penalising him (and stopping the unit to attack), just
+                            because the resulting animation is too much work seems
+                            backwards.
+                            <br>
+                            <br>
+                            Of course a lot of transitions will be needed in a sprite with this
+                            size. It would look choppy otherwise—well, more work to do!
+                        </p>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+        <div class="comment-separator"></div>
+        <main class="project-content">
+            
+            <section id="next-issue" class="project-section project-section--reversed">
+
+                <div class="project-media-box">
+                    <img src="imgs/next-issue.png" alt="Coding">
+                </div>
+
+                <div class="project-text-box">
+                    <span class="project-text-box__label">Coming next...</span>
+                    <div class="text-box">
+                        <p>
+                            I would like to talk about impossible planning, passionate overscoping,
+                            and brutal design as these things really pump me up when developing a new project.
+                        </p>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+
+        <div class="comment-separator"></div>
+        <section id="about_me">
+            <div class="about-layout">
+                <img src="imgs/mars_anim.gif" class="round-gif" alt="Mars animated avatar">
+                <div class="about-text">
+                    <a href="https://x.com/EcceMars" target="_blank" class="social-handle">@EcceMars</a>
+                    <div class="text-box">
+                        Animator and pixel artist, turned game developer.<br><br>Adopt an artist!
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <script>
+            const tag = document.createElement('script');
+            tag.src   = "https://www.youtube.com/iframe_api";
+            document.head.appendChild(tag);
+
+            const LOOP_BEFORE_END = 1;
+
+            let player      = null;
+            let watchHandle = null;
+
+            /* Called automatically by the API once its script loads. */
+            function onYouTubeIframeAPIReady() {
+                player = new YT.Player('locust-player', {
+                    events: {
+                        /* onReady fires once the player is initialised
+                        and ready to accept commands.              */
+                        onReady: onPlayerReady,
+                    }
+                });
+            }
+
+            function onPlayerReady(event) {
+                /* Start a watcher that checks playback position
+                every 500 ms — light enough to not affect performance. */
+                watchHandle = setInterval(checkLoop, 500);
+            }
+
+            function checkLoop() {
+                /* Guard: do nothing if the player isn't ready yet. */
+                if (!player || typeof player.getCurrentTime !== 'function') return;
+
+                const current  = player.getCurrentTime();  // seconds elapsed
+                const duration = player.getDuration();      // total video length
+
+                /* If duration is 0 the video metadata hasn't loaded yet — skip. */
+                if (duration === 0) return;
+
+                if (current >= duration - LOOP_BEFORE_END) {
+                    player.seekTo(0, true);
+                }
+            }
+        </script>
+    </body>
+</html>

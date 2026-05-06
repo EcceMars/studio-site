@@ -1,0 +1,290 @@
+/* ═══════════════════════════════════════════════════════════
+   project-layout.css — project page–specific layout styles
+
+   Covers:
+     • Site header / banner with home link
+     • Hero media (scaled-to-width image, gif, or YouTube embed)
+     • Alternating image+text section rows
+     • Reuses .text-box and .about-text from style.css for the
+       footer / about section — no duplication needed there.
+
+   Import this file by adding it to objects.css:
+     @import url('project-layout.css');
+═══════════════════════════════════════════════════════════ */
+
+@import url('color-palette.css');
+
+
+/* ═══════════════════════════════════════════════════════════
+   SITE HEADER / BANNER
+   A thin bar pinned to the top of the page that holds the
+   studio name as a link back to index.html.
+   position: sticky keeps it visible while scrolling.
+═══════════════════════════════════════════════════════════ */
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;                        /* sits above page content, below overlays */
+
+    display: flex;
+    align-items: center;
+    padding: 10px 24px;
+
+    background-color: var(--ui-bg);
+    border-bottom: 1px solid var(--ui-accent);
+}
+
+/* The studio name link — left-aligned inside the banner */
+.site-header__home-link {
+    color: var(--user-color);
+    text-decoration: none;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    transition: opacity 0.3s ease;
+}
+
+.site-header__home-link:hover {
+    opacity: 0.7;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   PAGE CONTENT WRAPPER
+   Constrains the readable area to a comfortable line length
+   and centres it horizontally.
+   Wraps everything between the header and the footer.
+═══════════════════════════════════════════════════════════ */
+
+.project-content {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 20px 80px; /* bottom padding clears the cave background */
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   PROJECT TITLE
+   Displayed just below the banner, above the hero media.
+   Uses the global h1 style; no override needed here.
+   Add  id="project-title"  on the <h1> if you want to
+   anchor-link to it from another page.
+═══════════════════════════════════════════════════════════ */
+
+/* (no extra rules — the global h1 in style.css is sufficient) */
+
+
+/* ═══════════════════════════════════════════════════════════
+   HERO MEDIA
+   A full-width block that accepts:
+     • <img>            — a normal image or gif
+     • <iframe>         — a YouTube embed (see locust_project.html
+                          for the correct embed URL format)
+
+   The 16:9 wrapper trick (padding-top: 56.25%) makes the
+   iframe responsive without JavaScript — the iframe is
+   absolutely positioned inside it so it always fills the box.
+═══════════════════════════════════════════════════════════ */
+
+/* Outer container — shared by both image and video variants */
+.hero-media {
+    width: 100%;
+    margin: 24px 0 40px;
+    border-radius: 10px;
+    overflow: hidden;           /* clips the child to the rounded corners */
+}
+
+/* Image / gif variant — just stretches to full width */
+.hero-media img {
+    width: 100%;
+    height: auto;               /* preserves the image's natural aspect ratio */
+    display: block;             /* removes the inline-image whitespace gap */
+}
+
+/* Video embed variant wrapper — enforces a 16 ∶ 9 ratio */
+.hero-media--video {
+    position: relative;
+    scale: 1.1;;
+    width: 100vw;           /* full viewport width */
+    margin-left: -20px;     /* cancel out body padding on the left */
+    padding-top: 56.25%;    /* 16:9 ratio */
+    pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION ROWS  (.project-section)
+   Each row pairs one .project-media-box with one
+   .project-text-box side by side.
+
+   Direction is controlled by a modifier class on the row:
+     .project-section             → media LEFT,  text RIGHT  (default)
+     .project-section--reversed   → media RIGHT, text LEFT
+
+   On narrow screens both variants stack vertically with
+   media on top (see the @media block at the bottom).
+═══════════════════════════════════════════════════════════ */
+
+.project-section {
+    display: flex;
+    align-items: flex-start;    /* align tops of the two boxes */
+    gap: 32px;
+    margin: 48px 0;
+}
+
+/* Reverse the flex order so media appears on the right */
+.project-section--reversed {
+    flex-direction: row-reverse;
+}
+
+
+/* ── Media box ───────────────────────────────────────────── */
+
+/* Holds an <img>, <gif>, or the .hero-media--video wrapper.
+   flex: 1 1 45% means:
+     - can grow  (1)
+     - can shrink (1)
+     - preferred width 45 % of the row  */
+.project-media-box {
+    flex: 1 1 45%;
+    border-radius: 10px;
+    overflow: hidden;           /* clips children to rounded corners */
+}
+
+/* Images and gifs scale to the box width automatically */
+.project-media-box img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Video embed inside a section row — same ratio trick as hero */
+.project-media-box--video {
+    position: relative;
+    padding-top: 56.25%;
+}
+
+.project-media-box--video iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    pointer-events: none;
+}
+
+.project-media-box--side-by-side {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.project-media-box--side-by-side img {
+    flex: 1;
+    min-width: 0;  /* Prevents flex overflow */
+}
+
+.project-media-box--side-by-side {
+    position: relative;
+}
+
+/* If you want the arrow you mentioned */
+.project-media-box--side-by-side::after {
+    content: "→";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    color: var(--critical-color);
+    pointer-events: none;
+}
+
+.comparison-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    margin: 2rem 0;
+}
+
+.comparison-item {
+    flex: 1;
+    text-align: center;
+}
+
+.comparison-item img {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: 8px;
+}
+
+.comparison-arrow {
+    font-size: 2.5rem;
+    color: var(--user-color);
+    font-weight: bold;
+}
+
+.caption {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+
+/* ── Text box ────────────────────────────────────────────── */
+
+/* Mirrors .project-media-box sizing so both columns share
+   available space equally.
+   The inner content reuses .text-box from style.css for the
+   same visual treatment (background, padding, border-radius). */
+.project-text-box {
+    flex: 1 1 45%;
+
+    /* Stack an optional anchor label above the text card */
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Optional small label above the text card — e.g. a section
+   title or anchor target.  Usage:
+     <span class="project-text-box__label">Gameplay</span>  */
+.project-text-box__label {
+    color: var(--annotation-color);
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+}
+
+/* The visible card — uses the same .text-box class from
+   style.css, so no extra rules are needed here.
+   If you want a wider card than the default 320 px max,
+   override it inline or add a modifier:              */
+.project-text-box .text-box {
+    max-width: 100%;            /* let it fill the flex column */
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE — narrow screens (≤ 768 px)
+   Both box types stack vertically, media always on top.
+═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+
+    /* Stack the columns vertically */
+    .project-section,
+    .project-section--reversed {
+        flex-direction: column;
+    }
+
+    /* Let each box take the full row width */
+    .project-media-box,
+    .project-text-box {
+        flex: 1 1 100%;
+    }
+}

@@ -1,0 +1,29 @@
+@import url('color-palette.css');
+
+.sticker {
+    display: inline-block;
+    background-color: var(--annotation-color);
+    color: black;
+    font-family: "JetBrains Mono", "Consolas", "Courier New", monospace;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 2px 3px 6px var(--ui-accent);
+    transform: rotate(-12deg);
+    border-radius: 3px;
+    position: relative;
+    z-index: 10;
+    user-select: none;
+    white-space: nowrap;
+}
+.sticker::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    bottom: -2px;
+    left: -2px;
+    background: inherit;
+    border-radius: 3px;
+    z-index: -1;
+    transform: rotate(2deg);
+}

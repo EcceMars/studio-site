@@ -42,7 +42,7 @@ nav ul li a:hover {
 nav ul li:not(:last-child)::after {
     content: "|";
     color: var(--keyword-color);
-    margin-left: 20px;
+    
     opacity: 0.6;
     font-size: 1.1em;
 }

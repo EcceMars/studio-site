@@ -8,8 +8,7 @@
  
         <!-- Main stylesheet — imports all component CSS via objects.css -->
         <link rel="stylesheet" href="css/style.css?v=2">
-        <script src="js/carousel.js?v=2"></script>
- 
+
         <!-- Page metadata -->
         <meta charset="UTF-8">
         <meta name="description" content="MARS•STUDIO — pixel art, animation and game development by EcceMars.">
@@ -28,11 +27,15 @@
         <header>
             <h1>MARS⋅STUDIO</h1>
         </header>
+
+        <!--
         <div class="construction-overlay" id="constructionOverlay"></div>
         <div class="construction-banner" id="constructionBanner">
             🚧 This site is still under construction — most links may not work yet.
             <button onclick="dismissBanner()">✕</button>
         </div>
+        -->
+        
  
         <!-- ═══════════════════════════════════════
              NAV — main navigation links
@@ -56,8 +59,8 @@
         ═══════════════════════════════════════ -->
         <h2>PROJECTS</h2>
  
-        <div class="carousel-container">
-            <button class="nav-btn prev" onclick="prevCard()">‹</button>
+        <div class="carousel-container" style="scale: 1.1">
+            <button class="nav-btn prev">‹</button>
  
             <div class="carousel-track" id="carouselTrack">
  
@@ -66,24 +69,34 @@
                     <h3>LOCUST</h3>
                     <p>2D mecha pixel art platformer</p>
                     <a href="locust_project.html">View project →</a>
+                    <a href="locust_development.html" style="font-size: smaller;">
+                        <span class="sticker">NEW</span>
+                        Read the development →
+                    </a>
                 </div>
  
                 <div class="card" data-index="1">
                     <img src="imgs/distant_sellsword.png" alt="Distant: Sellsword Project">
                     <h3>Distant: Sellsword</h3>
                     <p>ECS RPG simulator</p>
-                    <a href="#">View project →</a>
+                    <a href="#">
+                        <span class="sticker">Under construction...</span>
+                        View project →
+                    </a>
                 </div>
 
                 <div class="card" data-index="2">
                     <img src="imgs/pilot.png" alt="Portfolio">
                     <h3>Art Pieces</h3>
                     <p>Illustrations and animations</p>
-                    <a href="#">View others →</a>
- 
+                    <a href="#">
+                        <span class="sticker">Under construction...</span>
+                        View others →
+                    </a>
+                </div>
+
+                <button class="nav-btn next">›</button>
             </div>
- 
-            <button class="nav-btn next" onclick="nextCard()">›</button>
         </div>
  
         <!-- Carousel dot indicators — populated dynamically by carousel.js -->
@@ -103,13 +116,8 @@
                     </div>
                 </div>
             </div>
-        </section>
- 
-        <!-- ═══════════════════════════════════════
-             SCRIPTS
-             Placed at end of body so the DOM is
-             fully loaded before JS runs.
-        ═══════════════════════════════════════ -->
+        </section> 
+
         <script src="js/carousel.js"></script>
         <script>
             /* Copies Discord username to clipboard and notifies the user. */
@@ -122,6 +130,5 @@
                 document.getElementById('constructionOverlay').style.display = 'none';
             }
         </script>
- 
     </body>
 </html>

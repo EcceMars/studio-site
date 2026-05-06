@@ -56,6 +56,15 @@ h2 {
     margin-bottom: 3%;
 }
 
+h3 {
+    color: var(--control-flow-color);
+    font-size: 1.2rem;
+    text-align: center;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    width: 100%;
+}
+
 /* ── About section layout ────────────────────────────────── */
 
 /* Wraps the avatar and text-box side by side.
