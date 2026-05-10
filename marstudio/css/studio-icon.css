@@ -1,30 +1,38 @@
+@import url('color-palette.css');
+
 :root {
+	--icon-size: 80px;
 	--cut-percent: 20%;
-	--logo-rel-size: 65%;;
-	--circle-color: #a7ead5;
+	--logo-rel-size: 65%;
+	--icon-fade-stops: 20%;
+	--circle-color: var(--user-color);
+	
 }
-.icon {
+.studio-icon {
 	display: block;
-	min-width: 64px;
-	min-height: 64px;
 	position: relative;
-}
-.circle {
+	width: var(--icon-size);
+	height: var(--icon-size);
 	border-radius: 50%;
-	background-color: var(--circle-color);
 	overflow: hidden;
-}
-.half-circle {
+
 	clip-path: inset(0% 0% var(--cut-percent, 0%) 0%);
-}
-.half-circle-grad {
-	clip-path: inset(0% 0% var(--cut-percent, 0%) 0%);
-	background-color: rgba(#00aaff, 0.3);
-}
-.rich-studio-icon {
+
+	background-color: var(--circle-color);
 	background-image: url('../imgs/mars-studio-icon.png');
 	background-size: var(--logo-rel-size);
 	background-position: center;
 	background-repeat: no-repeat;
+}
+.studio-icon::after {
+	content: "";
 	position: absolute;
+	inset: 0;
+	background: linear-gradient(
+		to bottom,
+		transparent 0%,
+		transparent var(--icon-fade-stops),
+		var(--cave-top-color) 100%
+	);
+	pointer-events: none;
 }

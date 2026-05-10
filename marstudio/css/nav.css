@@ -1,18 +1,30 @@
-/* ═══════════════════════════════════════════════════════════
-   nav.css — top navigation bar styles
-═══════════════════════════════════════════════════════════ */
-
 @import url('color-palette.css');
-
+header {
+    display: grid;
+    align-items: flex-end;
+}
+header h1 {
+    color: var(--user-color);
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 3%;
+    grid-column: 1;
+    grid-row: 1;
+    text-align: center;
+    width: 100%;
+}
+header .studio-icon {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: flex-start;
+    z-index: 1;
+}
 nav {
     width: 100%;
     display: flex;
     justify-content: center;
     opacity: 0.8;
 }
-
-/* Inline list — removes bullets and lays items out
-   horizontally. flex-wrap allows wrapping on small screens. */
 nav ul {
     display: flex;
     flex-wrap: wrap;
