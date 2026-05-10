@@ -1,0 +1,5 @@
+:root {
+    --img-background:  url('../imgs/background.png');
+    --img-studio-icon: url('../imgs/mars-studio-icon.png');
+    --img-mars-anim:   url('../imgs/mars_anim.gif');
+}

@@ -4,7 +4,6 @@
         <title>MARS•STUDIO</title>
  
         <link rel="icon" type="image/x-icon" href="imgs/mars-studio-icon.png">
-
         <link rel="stylesheet" href="css/style.css">
 
         <meta charset="UTF-8">
@@ -27,13 +26,12 @@
             <ul>
                 <li><a href="#">Adopt an Artist!</a></li>
                 <li><a href="#about_me">About me</a></li>
-                <li><a href="#" onclick="copyDiscord(); return false;">Discord</a></li>
+                <li><a href="#" data-action="copy-discord">Discord</a></li>
                 <li><a href="https://github.com/EcceMars" target="_blank">GitHub</a></li>
                 <li><a href="#">Send me a Message</a></li>
             </ul>
         </nav>
  
-        <!-- Visual divider between nav and content -->
         <div class="comment-separator"></div>
  
         <h2>PROJECTS</h2>
@@ -98,16 +96,6 @@
         </section> 
 
         <script src="js/carousel.js"></script>
-        <script>
-            /* Copies Discord username to clipboard and notifies the user. */
-            function copyDiscord() {
-                navigator.clipboard.writeText("eccemars");
-                alert("Hey! You got my Discord username (eccemars)! Send me a friend request there. 💖");
-            }
-            function dismissBanner() {
-                document.getElementById('constructionBanner').style.display = 'none';
-                document.getElementById('constructionOverlay').style.display = 'none';
-            }
-        </script>
+        <script src="js/discord.js"></script>
     </body>
 </html>

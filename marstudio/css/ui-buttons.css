@@ -1,14 +1,5 @@
-/* ═══════════════════════════════════════════════════════════
-   ui-buttons.css — reusable button and theme-picker styles
-═══════════════════════════════════════════════════════════ */
 
 @import url('color-palette.css');
-
-/* ── Generic utility button ──────────────────────────────── */
-
-/* .ui-button is a small inline button for minor actions.
-   Sizing uses fixed px rather than % to stay predictable
-   regardless of parent width. */
 .ui-button {
     display: inline-block;
     padding: 8px 16px;
@@ -23,11 +14,6 @@
 .ui-button:hover {
     background-color: var(--ui-accent);
 }
-
-/* ── Theme picker container ──────────────────────────────── */
-
-/* Wraps a row of .theme-btn elements; centres and wraps
-   them on narrow screens. */
 .themes-container {
     display: flex;
     flex-wrap: wrap;
@@ -36,8 +22,6 @@
     max-width: 900px;
     margin: 0 auto;
 }
-
-/* ── Theme button ────────────────────────────────────────── */
 .theme-btn {
     min-width: 180px;
     padding: 16px 32px;
@@ -51,16 +35,11 @@
     cursor: pointer;
     transition: all 0.3s ease;
 }
-
 .theme-btn:hover {
     background-color: var(--ui-accent);
     color: white;
     transform: scale(1.05);
 }
-
-/* ── Text wrapper ────────────────────────────────────────── */
-
-/* Constrains a block of prose to a readable line length */
 .text-wrapper {
     max-width: 800px;
     margin: 0 auto;

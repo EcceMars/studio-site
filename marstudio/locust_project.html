@@ -3,63 +3,28 @@
     <head>
         <title>MARS•STUDIO — Locust Project</title>
 
-        <!-- Favicon -->
         <link rel="icon" type="image/x-icon" href="imgs/mars-studio-icon.png">
 
         <link rel="stylesheet" href="css/style.css">
 
-        <!-- Page metadata -->
         <meta charset="UTF-8">
         <meta name="description" content="MARS•STUDIO — Locust: 2D mecha pixel art platformer by EcceMars.">
         <meta name="keywords" content="MARS,STUDIO,LOCUST,GAME,PIXEL,ART,GODOT,MECHA,PLATFORMER">
         <meta name="author" content="EcceMars">
 
-        <!-- Ensures correct scaling on mobile devices -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-
-        <!-- ═══════════════════════════════════════════════════
-             CAVE BACKGROUND — same fixed bg as index.html
-        ═══════════════════════════════════════════════════ -->
         <div class="cave-bg"></div>
 
         <header class="site-header">
             <div class="studio-icon"></div>
             <nav style="justify-content: left;"><ul style="justify-content: left;"><li><a href="index.html" class="site-header__home-link">‹ MARS⋅STUDIO</a></li></ul></nav>
         </header>
-        <!-- ═══════════════════════════════════════════════════
-             PAGE CONTENT
-             .project-content centres and constrains the width
-             of everything between the header and the footer.
-        ═══════════════════════════════════════════════════ -->
         <main class="project-content">
 
-            <!-- Project title.
-                 id="project-title" lets other pages deep-link
-                 here via locust_project.html#project-title   -->
             <h1 id="project-title">LOCUST</h1>
             <h2>2D Mecha Pixel Art Platformer</h2>
-
-            <!-- ─────────────────────────────────────────────
-                 HERO MEDIA
-                 Option A — local image or gif:
-                   Use the plain .hero-media wrapper with an <img>.
-
-                 Option B — YouTube embed (shown below):
-                   Add the .hero-media--video modifier so the
-                   16:9 ratio box activates.
-
-                 YouTube "nocookie" embed URL format:
-                   https://www.youtube-nocookie.com/embed/VIDEO_ID
-                   ?autoplay=1     — start playing on load
-                   &mute=1         — required for autoplay to work
-                   &loop=1         — loop the video
-                   &playlist=VIDEO_ID  — loop requires this too
-                   &controls=0     — hide the player controls
-                   &modestbranding=1 — minimal YouTube branding
-                 Replace VIDEO_ID with your actual YouTube video ID.
-            ───────────────────────────────────────────────── -->
 
             <div class="project-media-box project-media-box--video">
                 <iframe
@@ -70,25 +35,13 @@
                     allowfullscreen>
                 </iframe>
             </div>
-            <!-- ─────────────────────────────────────────────
-                 SECTION ROW 1 — image LEFT, text RIGHT (default)
-                 id="section-overview" acts as an anchor target.
-                 Remove or rename the id to suit your sections.
-            ───────────────────────────────────────────────── -->
             <section id="section-overview" class="project-section">
 
-                <!-- Media box — swap the <img> for the video
-                     variant if you need a clip here too.
-                     See the hero media comment above for the
-                     video markup pattern.                   -->
                 <div class="project-media-box">
                     <img src="imgs/mock_up.gif" alt="Locust mock-up animation">
                 </div>
 
-                <!-- Text box — .text-box is the same card style
-                     used in the about section on index.html  -->
                 <div class="project-text-box">
-                    <!-- Optional label shown above the card -->
                     <span class="project-text-box__label">Overview</span>
                     <div class="text-box">
                         <p>
@@ -105,15 +58,9 @@
 
             </section>
 
-            <!-- ─────────────────────────────────────────────
-                 SECTION ROW 2 — image RIGHT, text LEFT
-                 .project-section--reversed flips the flex order
-                 so the media box appears on the right side.
-            ───────────────────────────────────────────────── -->
             <section id="section-art" class="project-section project-section--reversed">
 
                 <div class="project-media-box">
-                    <!-- Replace with your actual concept art asset -->
                     <img src="imgs/locust.png" alt="Locust concept art">
                 </div>
 
@@ -129,18 +76,8 @@
                 </div>
 
             </section>
-
-            <!-- Add more .project-section / .project-section--reversed
-                 blocks here as the project grows.              -->
-
         </main>
 
-        <!-- ═══════════════════════════════════════════════════
-             FOOTER — About / contact section
-             Identical markup to index.html so the same CSS
-             rules (about-layout, round-gif, text-box, etc.)
-             apply without any duplication.
-        ═══════════════════════════════════════════════════ -->
         <div class="comment-separator"></div>
         <section id="about_me">
             <div class="about-layout">
@@ -154,65 +91,7 @@
             </div>
         </section>
 
-        <!-- ═══════════════════════════════════════════════════
-             SCRIPTS
-             carousel.js is NOT needed on this page —
-             remove it if it was accidentally left in.
-        ═══════════════════════════════════════════════════ -->
-
-        <script>
-            /* ── YouTube IFrame Player API ───────────────────────────
-            The API script is loaded asynchronously by injecting a
-            <script> tag into the page. Once it finishes loading it
-            calls onYouTubeIframeAPIReady automatically — that is
-            the entry point we must define below.                  */
-            const tag = document.createElement('script');
-            tag.src   = "https://www.youtube.com/iframe_api";
-            document.head.appendChild(tag);
-
-            /* How many seconds before the end to seek back to 0.
-            3s gives a comfortable buffer before the endscreen
-            and UI elements appear.                              */
-            const LOOP_BEFORE_END = 1;
-
-            let player      = null; // will hold the YT.Player instance
-            let watchHandle = null; // setInterval handle — kept so we can clear it
-
-            /* Called automatically by the API once its script loads. */
-            function onYouTubeIframeAPIReady() {
-                player = new YT.Player('locust-player', {
-                    events: {
-                        /* onReady fires once the player is initialised
-                        and ready to accept commands.              */
-                        onReady: onPlayerReady,
-                    }
-                });
-            }
-
-            function onPlayerReady(event) {
-                /* Start a watcher that checks playback position
-                every 500 ms — light enough to not affect performance. */
-                watchHandle = setInterval(checkLoop, 500);
-            }
-
-            function checkLoop() {
-                /* Guard: do nothing if the player isn't ready yet. */
-                if (!player || typeof player.getCurrentTime !== 'function') return;
-
-                const current  = player.getCurrentTime();  // seconds elapsed
-                const duration = player.getDuration();      // total video length
-
-                /* If duration is 0 the video metadata hasn't loaded yet — skip. */
-                if (duration === 0) return;
-
-                /* When we're within LOOP_BEFORE_END seconds of the end,
-                seek silently back to the beginning.
-                seekTo(0, true) — second arg 'true' means seek to the
-                nearest keyframe, which is instant and avoids a reload. */
-                if (current >= duration - LOOP_BEFORE_END) {
-                    player.seekTo(0, true);
-                }
-            }
-        </script>
+        <script src="js/youtube-loop.js"></script>
+        <script>initYouTubeLoop("locust-player");</script>
     </body>
 </html>

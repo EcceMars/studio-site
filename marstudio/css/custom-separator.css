@@ -1,16 +1,5 @@
-/* ═══════════════════════════════════════════════════════════
-   custom-separator.css — decorative comment-style divider
-
-   Two variants:
-   1. Plain line  — <div class="comment-separator"></div>
-   2. Labelled    — <div class="comment-separator"><span><em>Title</em></span></div>
-
-   Both use # bookends to evoke a code comment (Python/GDScript style).
-═══════════════════════════════════════════════════════════ */
-
 @import url('color-palette.css');
 
-/* ── Base styles (shared by both variants) ───────────────── */
 .comment-separator {
     position: relative;
     margin: 1.2vh 1.2em;
@@ -19,17 +8,12 @@
     font-size: 1.05rem;
     letter-spacing: 4px;
     opacity: 0.5;
-    user-select: none; /* Prevents accidental selection when clicking near it */
+    user-select: none;
 }
-
-/* ── Variant 1: Plain horizontal rule ────────────────────── */
-
-/* ::before and ::after place the # symbols at each end */
 .comment-separator {
     height: 1px;
     background-color: var(--comment-color);
 }
-
 .comment-separator::before {
     content: "#";
     position: absolute;
@@ -38,7 +22,6 @@
     transform: translateY(-50%);
     line-height: 1;
 }
-
 .comment-separator::after {
     content: "#";
     position: absolute;
@@ -47,11 +30,6 @@
     transform: translateY(-50%);
     line-height: 1;
 }
-
-/* ── Variant 2: Labelled separator with centred text ─────── */
-
-/* :has(span) targets the element only when a <span> child
-   is present — this switches to the labelled layout. */
 .comment-separator:has(span) {
     height: auto;
     background: none;
@@ -60,24 +38,17 @@
     gap: 8px;
     margin: 50px 1.2em;
 }
-
-/* Reset ::before / ::after to static so they sit inline */
 .comment-separator:has(span)::before,
 .comment-separator:has(span)::after {
     position: static;
     transform: none;
 }
-
-/* The <span> stretches to fill remaining space and draws
-   lines on either side of the label text via its own
-   ::before and ::after pseudo-elements. */
 .comment-separator:has(span) span {
     display: flex;
     align-items: center;
     flex: 1;
     gap: 8px;
 }
-
 .comment-separator:has(span) span::before,
 .comment-separator:has(span) span::after {
     content: "";
@@ -85,8 +56,5 @@
     height: 1.5px;
     background-color: var(--comment-color);
 }
-
-/* <em> inside <span> becomes the label text,
-   automatically wrapped in "# " and " #" */
 .comment-separator:has(span) em::before { content: "# "; font-style: normal; }
 .comment-separator:has(span) em::after  { content: " #"; font-style: normal; }

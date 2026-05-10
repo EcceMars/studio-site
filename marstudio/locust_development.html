@@ -105,47 +105,7 @@
             </div>
         </section>
 
-        <script>
-            const tag = document.createElement('script');
-            tag.src   = "https://www.youtube.com/iframe_api";
-            document.head.appendChild(tag);
-
-            const LOOP_BEFORE_END = 1;
-
-            let player      = null;
-            let watchHandle = null;
-
-            /* Called automatically by the API once its script loads. */
-            function onYouTubeIframeAPIReady() {
-                player = new YT.Player('locust-player', {
-                    events: {
-                        /* onReady fires once the player is initialised
-                        and ready to accept commands.              */
-                        onReady: onPlayerReady,
-                    }
-                });
-            }
-
-            function onPlayerReady(event) {
-                /* Start a watcher that checks playback position
-                every 500 ms — light enough to not affect performance. */
-                watchHandle = setInterval(checkLoop, 500);
-            }
-
-            function checkLoop() {
-                /* Guard: do nothing if the player isn't ready yet. */
-                if (!player || typeof player.getCurrentTime !== 'function') return;
-
-                const current  = player.getCurrentTime();  // seconds elapsed
-                const duration = player.getDuration();      // total video length
-
-                /* If duration is 0 the video metadata hasn't loaded yet — skip. */
-                if (duration === 0) return;
-
-                if (current >= duration - LOOP_BEFORE_END) {
-                    player.seekTo(0, true);
-                }
-            }
-        </script>
+        <script src="js/youtube-loop.js"></script>
+        <script>initYouTubeLoop("locust-player");</script>
     </body>
 </html>
