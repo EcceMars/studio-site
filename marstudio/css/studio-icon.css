@@ -1,10 +1,7 @@
-@import url('color-palette.css');
-
 :root {
 	--cut-percent: 20%;
-	--logo-rel-size: 65%;
-	--logo-url: url('../imgs/mars-studio-icon.png');
-	--circle-color: var(--user-color);
+	--logo-rel-size: 65%;;
+	--circle-color: #a7ead5;
 }
 .icon {
 	display: block;
@@ -25,7 +22,7 @@
 	background-color: rgba(#00aaff, 0.3);
 }
 .rich-studio-icon {
-	background-image: var(--logo-url);
+	background-image: url('../imgs/mars-studio-icon.png');
 	background-size: var(--logo-rel-size);
 	background-position: center;
 	background-repeat: no-repeat;
