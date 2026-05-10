@@ -1,0 +1,33 @@
+@import url('color-palette.css');
+
+:root {
+	--cut-percent: 20%;
+	--logo-rel-size: 65%;
+	--logo-url: url('../imgs/mars-studio-icon.png');
+	--circle-color: var(--user-color);
+}
+.icon {
+	display: block;
+	min-width: 64px;
+	min-height: 64px;
+	position: relative;
+}
+.circle {
+	border-radius: 50%;
+	background-color: var(--circle-color);
+	overflow: hidden;
+}
+.half-circle {
+	clip-path: inset(0% 0% var(--cut-percent, 0%) 0%);
+}
+.half-circle-grad {
+	clip-path: inset(0% 0% var(--cut-percent, 0%) 0%);
+	background-color: rgba(#00aaff, 0.3);
+}
+.rich-studio-icon {
+	background-image: var(--logo-url);
+	background-size: var(--logo-rel-size);
+	background-position: center;
+	background-repeat: no-repeat;
+	position: absolute;
+}

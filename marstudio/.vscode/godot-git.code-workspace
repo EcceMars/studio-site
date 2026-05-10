@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../../godot-git"
+		},
+		{
+			"path": ".."
+		}
+	],
+	"settings": {
+		"claudeCode.environmentVariables": [],
+		"godotTools.editorPath.godot4": "/Users/eccemars/Desktop/Godot 4.7-beta1.app"
+	}
+}
