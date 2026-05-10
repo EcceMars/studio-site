@@ -13,7 +13,10 @@
     border-bottom: 1px solid var(--ui-accent);
 }
 
-/* The studio name link — left-aligned inside the banner */
+.site-header .studio-icon {
+    scale: 0.8;
+}
+
 .site-header__home-link {
     color: var(--user-color);
     text-decoration: none;

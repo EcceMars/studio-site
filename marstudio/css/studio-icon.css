@@ -1,18 +1,17 @@
 @import url('color-palette.css');
 
 :root {
-	--icon-size: 80px;
+	--icon-size: 64px;
 	--cut-percent: 20%;
 	--logo-rel-size: 65%;
 	--icon-fade-stops: 20%;
 	--circle-color: var(--user-color);
-	
 }
 .studio-icon {
 	display: block;
 	position: relative;
-	width: var(--icon-size);
-	height: var(--icon-size);
+	min-width: var(--icon-size);
+	min-height: var(--icon-size);
 	border-radius: 50%;
 	overflow: hidden;
 
@@ -29,9 +28,10 @@
 	position: absolute;
 	inset: 0;
 	background: linear-gradient(
-		to bottom,
-		transparent 0%,
+		in oklab to top,
+		transparent 20%,
 		transparent var(--icon-fade-stops),
+		50%,
 		var(--cave-top-color) 100%
 	);
 	pointer-events: none;
