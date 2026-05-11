@@ -152,14 +152,6 @@
     font-size: 0.9rem;
     color: var(--text-secondary);
 }
-
-
-/* ── Text box ────────────────────────────────────────────── */
-
-/* Mirrors .project-media-box sizing so both columns share
-   available space equally.
-   The inner content reuses .text-box from style.css for the
-   same visual treatment (background, padding, border-radius). */
 .project-text-box {
     flex: 1 1 45%;
 
@@ -178,19 +170,9 @@
     letter-spacing: 0.04em;
 }
 
-/* The visible card — uses the same .text-box class from
-   style.css, so no extra rules are needed here.
-   If you want a wider card than the default 320 px max,
-   override it inline or add a modifier:              */
 .project-text-box .text-box {
     max-width: 100%;            /* let it fill the flex column */
 }
-
-
-/* ═══════════════════════════════════════════════════════════
-   RESPONSIVE — narrow screens (≤ 768 px)
-   Both box types stack vertically, media always on top.
-═══════════════════════════════════════════════════════════ */
 
 @media (max-width: 768px) {
 
