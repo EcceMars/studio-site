@@ -175,8 +175,6 @@
 }
 
 @media (max-width: 768px) {
-
-    /* Stack the columns vertically */
     .project-section,
     .project-section--reversed {
         flex-direction: column;
